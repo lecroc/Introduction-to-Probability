@@ -16,6 +16,8 @@ total<-nas+complete
 
 pctna<-nas/total
 
+# Percentage of na values
+
 pctna
 
 # select columns I want for my questions
@@ -30,4 +32,14 @@ pctna
 list<-c(1,19,33,45,49,68)
 
 mydata<-brfss2013[,list]
+
+dim(mydata)
+
+completes<-complete.cases(mydata)
+
+mydata1<-mydata[completes,]
+
+dim(mydata1)
+
+
 
