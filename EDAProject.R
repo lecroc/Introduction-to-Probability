@@ -2,6 +2,11 @@
 
 load("brfss2013.Rdata")
 
+# load libraries
+
+library(dplyr)
+library(ggplot2)
+
 # look at dimensions
 
 dim(brfss2013)
@@ -24,12 +29,12 @@ pctna
 
 # State column 1
 # Veteran column 45
-# Employment Status 49
+# Time since checkup 26
 # General Health 19
 # Smoker 68
 # Heart Attack 33
 
-list<-c(1,19,33,45,49,68)
+list<-c(1,19,26,33,45,68)
 
 mydata<-brfss2013[,list]
 
@@ -41,5 +46,11 @@ mydata1<-mydata[completes,]
 
 dim(mydata1)
 
+# pull out states to classify as red or blue
 
+states<-mydata1 %>%
+  group_by(X_state) %>%
+  summarize()
+
+# write.csv(states, "matchstates.csv")
 

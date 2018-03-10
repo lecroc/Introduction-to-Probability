@@ -23,28 +23,37 @@ library(dplyr)
 load("brfss2013.RData")
 ```
 
-
-
 * * *
 
 ## Part 1: Data
 
+The data comes from the Behavioral Risk Factor Surveillance System (BRFSS), an observational study conducted in all 50 states in the US and participating US territories.  The population of interest are non-institutionalized adults aged 18+ living in the United States or participating territories.
+
+Data is sampled by surveying randomly selected adults from households contacted via a landline; or, cellular phone users that reside in a private residence or student housing at a college or university.  This study is observational, and therefore no causal relationships can be inferred from this data.
+
+There are many potential problems with the data collection.  Certain populations may be less likely to answer their phone, or may be at home less and therefore unable to be sampled.  In addition, the proportion of samples from each state is not in line with the proportion of the the total US population for each state.  Therefore certain states and / or regions may be over or under sampled within the data.
 
 * * *
 
 ## Part 2: Research questions
 
+I'm interested in how the dominant political view within states associates with the health and frequency of routine health care of the state's military veterans.  States will be typed into two classes - red or blue.  Red states will be defined as states that Mitt Romney carried in the 2012 presidential election, and blue states will be those carried by Barak Obama.
+
+I will first look at how general health between veterans and non-veterans differ by state type.  Second, I will look at how frequency of routine health care varies between veterans and non-veterans by state type.
+
+Members of the US military are often encouraged to smoke tobacco.  My third question will look at the association of respondents who have been diagnosed with a heart attack with smokers and non-smokers among veterans and non-veterans.
+
 **Research quesion 1:**
 
-Veteran, State Type, Employment Status
+What is the general health of veterans vs. non-veterans in red and blue states?
 
 **Research quesion 2:**
 
-Veteran, State Type, General Health
+What is the frequency of routine health care of veterans vs. non-veterans in red and blue states?
 
 **Research quesion 3:**
 
-Veteran, Smoker, Diagnosed with heart attack
+What is the heart-health of veterans vs. non-veterans among those who have smoked tobacco and those who have not?
 
 
 * * *
