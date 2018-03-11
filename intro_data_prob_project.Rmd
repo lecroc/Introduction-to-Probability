@@ -37,7 +37,7 @@ There are many potential problems with the data collection.  Certain populations
 
 ## Part 2: Research questions
 
-I'm interested in how the dominant political view within states associates with the health and frequency of routine health care of the state's military veterans.  States will be typed into two classes - red or blue.  Red states will be defined as states that Mitt Romney carried in the 2012 presidential election, and blue states will be those carried by Barak Obama.
+I'm interested in how the dominant political view within states associates with the health and frequency of routine health care of the state's military veterans.  States will be typed into two classes - red or blue.  Red states will be defined as states that Mitt Romney carried in the 2012 presidential election, and blue states will be those carried by Barak Obama.  Since Guam and Puerto Rico do not vote in the presidential election, I will exclude them from my analysis.
 
 I will first look at how general health between veterans and non-veterans differ by state type.  Second, I will look at how frequency of routine health care varies between veterans and non-veterans by state type.
 
