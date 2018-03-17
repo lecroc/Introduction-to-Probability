@@ -60,11 +60,81 @@ What is the heart-health of veterans vs. non-veterans among those who have smoke
 
 ## Part 3: Exploratory data analysis
 
-NOTE: Insert code chunks as needed by clicking on the "Insert a new code chunk" 
-button (green button with orange arrow) above. Make sure that your code is visible
-in the project you submit. Delete this note when before you submit your work.
+First, I will create a new data frame with only the features I'll need for my analysis.  I'll also get rid of any rows with N/A values.
+
+```{r}
+
+# select columns I want for my questions
+
+# State column 1
+# Veteran column 45
+# Time since checkup 26
+# General Health 19
+# Smoker 68
+# Heart Attack 33
+
+# list of columns I want
+
+list<-c(1,19,26,33,45,68)
+
+# create new dataframe with only the columns I want
+
+mydata<-brfss2013[,list]
+
+# Use complete.cases to get rid of N/As
+
+completes<-complete.cases(mydata)
+
+mydata<-mydata[completes,]
+
+# dimensions of data frame with N/A removed
+
+dim(mydata)
+
+
+```
+
+I have 466,472 observaions of 6 features.  I now need to classify each state as either red or blue and add that into my dataframe.  This data is from 2013, so I will use the results of the 2012 presidential election to classify the states.  Red states will be those that went to Mitt Romney and blue state will be those that went to Barak Obama.
+
+```{r}
+# pull out states to classify as red or blue
+
+states<-mydata %>%
+  group_by(X_state) %>%
+  summarize()
+
+# write out states to append "Blue" or "Red" status
+# write.csv(states, "matchstates.csv")
+
+# Read in state data with state Type added:
+
+statejoin<-read.csv("matchstates.csv")
+
+# Convert X_state to character to facilitate join
+
+mydata$X_state<-as.character(mydata$X_state)
+
+statejoin$X_state<-as.character(statejoin$X_state)
+
+# Use inner join to add "Type" column to mydata
+
+mydata<-inner_join(mydata, statejoin)
+
+# convert factors to numeric
+
+mydata$genhlth<-as.numeric(mydata$genhlth)
+
+mydata$checkup1<-as.numeric(mydata$checkup1)
+
+# quick peek at table
+
+head(mydata)
+```
+
 
 **Research quesion 1:**
+
+What is the general health of veterans vs. non-veterans in red and blue states?
 
 ```{r}
 
@@ -74,6 +144,8 @@ in the project you submit. Delete this note when before you submit your work.
 
 **Research quesion 2:**
 
+What is the frequency of routine health care of veterans vs. non-veterans in red and blue states?
+
 ```{r}
 
 ```
@@ -81,6 +153,9 @@ in the project you submit. Delete this note when before you submit your work.
 
 
 **Research quesion 3:**
+
+What is the heart-health of veterans vs. non-veterans among those who have smoked tobacco and those who have not?
+
 
 ```{r}
 

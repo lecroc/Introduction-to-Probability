@@ -79,15 +79,15 @@ statejoin$X_state<-as.character(statejoin$X_state)
 
 mydata<-inner_join(mydata, statejoin)
 
-# quick peek at table
-
-head(mydata)
-
 # convert factors to numeric
 
 mydata$genhlth<-as.numeric(mydata$genhlth)
 
 mydata$checkup1<-as.numeric(mydata$checkup1)
+
+# quick peek at table
+
+head(mydata)
 
 ####################################################################
 
@@ -137,6 +137,7 @@ p2bdat<-p2dat %>%
 
 # Histogram of non-Veterans
 
+
 p1<-ggplot(p1dat, aes(genhlth, fill=Type))+geom_histogram(binwidth = .5)+
   facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
   geom_vline(xintercept=mean(p1dat$genhlth), color="black")+
@@ -152,6 +153,7 @@ p2<-ggplot(p2dat, aes(genhlth, fill=Type))+geom_histogram(binwidth = .5)+
   ggtitle("General Health Value by State Type for Veterans")
 
 p2
+
 
 # t test for non-veterans
 
@@ -239,5 +241,6 @@ t.test(p3adat$checkup1, p3bdat$checkup1, var.equal = T)
 t.test(p4adat$checkup1, p4bdat$checkup1, var.equal = T)
 
 # veterans in blue states report more frequent checkups than in red states
+
 
 
