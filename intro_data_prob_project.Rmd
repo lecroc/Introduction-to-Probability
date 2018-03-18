@@ -29,9 +29,9 @@ load("brfss2013.RData")
 
 The data comes from the Behavioral Risk Factor Surveillance System (BRFSS), an observational study conducted in all 50 states in the US and participating US territories.  The population of interest are non-institutionalized adults aged 18+ living in the United States or participating territories.
 
-Data is sampled by surveying randomly selected adults from households contacted via a landline; or, cellular phone users that reside in a private residence or student housing at a college or university.  This study is observational, and therefore no causal relationships can be inferred from this data.
+Data is sampled by surveying randomly selected adults from households contacted via a landline; or, cellular phone users that reside in a private residence or student housing at a college or university.  This study is observational, and therefore no causal relationships can be inferred from this data.  In addition, the sample population is limited a bit to the subset of the stated population that have either a landline or celular phone.
 
-There are many potential problems with the data collection.  Certain populations may be less likely to answer their phone, or may be at home less and therefore unable to be sampled.  In addition, the proportion of samples from each state is not in line with the proportion of the the total US population for each state.  Therefore certain states and / or regions may be over or under sampled within the data.
+There are many potential problems with the data collection.  Certain population segments may be less likely to answer their phone, or may be at home less and therefore unable to be sampled.  In addition, the proportion of samples from each state is not in line with the proportion of the the total US population for each state.  Therefore certain states and / or regions may be over or under sampled within the data.
 
 * * *
 
@@ -49,7 +49,7 @@ What is the general health of veterans vs. non-veterans in red and blue states?
 
 **Research quesion 2:**
 
-What is the frequency of routine health care of veterans vs. non-veterans in red and blue states?
+What is the frequency of routine health care for veterans vs. non-veterans in red and blue states?
 
 **Research quesion 3:**
 
@@ -131,12 +131,63 @@ mydata$checkup1<-as.numeric(mydata$checkup1)
 head(mydata)
 ```
 
+Now that I've got the data set together, I'll move on to the research questions.
 
 **Research quesion 1:**
 
 What is the general health of veterans vs. non-veterans in red and blue states?
 
+I'll first select the features of interest for this questions and look at some summary statistics:
+
 ```{r}
+# Select data to work on question 1
+
+sum1<- mydata %>%
+  select(genhlth, veteran3, Type) %>%
+  group_by(Type, veteran3) %>%
+  summarise(Q1=quantile(genhlth, .25), Mean=mean(genhlth), Median=median(genhlth),
+            Q3=quantile(genhlth, .75), IQR=IQR(genhlth), StDev=sd(genhlth)) %>%
+  mutate(Skew=ifelse(Mean>Median, "Right", "Left"))
+
+head(sum1)
+
+
+```
+
+We can see that the spread and variation are similar for all four scenarios.  However, there is some variation in the distributions based on the mean, median and skew.  Non-veterans in blue states are the only group with a right skew, indicating that more of their general health values are less than the mean of 2.5.  It is also interesting to see that the average general health values for veterans are higher than non-veterans in both blue and red states.
+
+The histograms below show how the data is distributed for all four groups:
+
+```{r}
+# Non Veteran histogram data
+
+p1dat<-mydata %>%
+  select(genhlth, veteran3, Type) %>%
+  filter(veteran3=="No")
+
+# Veteran histogram data
+
+p2dat<-mydata %>%
+  select(genhlth, veteran3, Type) %>%
+  filter(veteran3=="Yes")
+
+# Histogram of non-Veterans
+
+p1<-ggplot(p1dat, aes(genhlth, fill=Type))+geom_histogram(binwidth = .5)+
+  facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
+  geom_vline(xintercept=mean(p1dat$genhlth), color="black")+
+  ggtitle("General Health Value by State Type for non - Veterans")
+
+p1
+
+# Histogram of veterans
+
+p2<-ggplot(p2dat, aes(genhlth, fill=Type))+geom_histogram(binwidth = .5)+
+  facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
+  geom_vline(xintercept = mean(p2dat$genhlth), color="black")+
+  ggtitle("General Health Value by State Type for Veterans")
+
+p2
 
 ```
 
@@ -144,9 +195,19 @@ What is the general health of veterans vs. non-veterans in red and blue states?
 
 **Research quesion 2:**
 
-What is the frequency of routine health care of veterans vs. non-veterans in red and blue states?
+What is the frequency of routine health care for veterans vs. non-veterans in red and blue states?
+
+Again, I'll organize the data required and look at the summary statistics:
 
 ```{r}
+sum2<- mydata %>%
+  select(checkup1, veteran3, Type) %>%
+  group_by(Type, veteran3) %>%
+  summarise(Q1=quantile(checkup1, .25), Mean=mean(checkup1), Median=median(checkup1),
+            Q3=quantile(checkup1, .75), IQR=IQR(checkup1), StDev=sd(checkup1)) %>%
+  mutate(Skew=ifelse(Mean>Median, "Right", "Left"))
+
+head(sum2)
 
 ```
 
