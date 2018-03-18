@@ -242,5 +242,14 @@ t.test(p4adat$checkup1, p4bdat$checkup1, var.equal = T)
 
 # veterans in blue states report more frequent checkups than in red states
 
+########################################################
 
+# Question 3 data
+
+sum3<- mydata %>%
+  select(cvdinfr4, veteran3, Type, smoke100) %>%
+  group_by(Type, veteran3, smoke100, cvdinfr4) %>%
+  summarise(n=n())
+
+head(sum3, 16)
 

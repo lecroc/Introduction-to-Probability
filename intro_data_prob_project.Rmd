@@ -211,6 +211,40 @@ head(sum2)
 
 ```
 
+Explanation of summary statistics
+
+These histograms show the distribution for each of the four groups:
+
+```{r}
+# Question 2 data
+
+p3dat<-mydata %>%
+  select(checkup1, veteran3, Type) %>%
+  filter(veteran3=="No")
+
+p4dat<-mydata %>%
+  select(checkup1, veteran3, Type) %>%
+  filter(veteran3=="Yes")
+
+# Histogram of non-Veterans
+
+p3<-ggplot(p3dat, aes(checkup1, fill=Type))+geom_histogram(binwidth = .5)+
+  facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
+  geom_vline(xintercept=mean(p3dat$checkup1), color="black")+
+  ggtitle("Time Since last Checkup by State Type for non - Veterans")
+
+p3
+
+# Histogram of veterans
+
+p4<-ggplot(p4dat, aes(checkup1, fill=Type))+geom_histogram(binwidth = .5)+
+  facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
+  geom_vline(xintercept = mean(p4dat$checkup1), color="black")+
+  ggtitle("Time Since last Checkup by State Type for Veterans")
+
+p4
+
+```
 
 
 **Research quesion 3:**
