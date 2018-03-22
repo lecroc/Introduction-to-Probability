@@ -6,6 +6,7 @@ load("brfss2013.Rdata")
 
 library(dplyr)
 library(ggplot2)
+library(tidyr)
 
 # look at dimensions
 
@@ -247,9 +248,10 @@ t.test(p4adat$checkup1, p4bdat$checkup1, var.equal = T)
 # Question 3 data
 
 sum3<- mydata %>%
-  select(cvdinfr4, veteran3, Type, smoke100) %>%
-  group_by(Type, veteran3, smoke100, cvdinfr4) %>%
-  summarise(n=n())
+  select(cvdinfr4, veteran3, smoke100) %>%
+  group_by(veteran3, smoke100) %>%
+  summarise(n=n()) %>%
+  spread(veteran3, Sum) 
 
 head(sum3, 16)
 

@@ -14,6 +14,7 @@ output:
 ```{r load-packages, message = FALSE}
 library(ggplot2)
 library(dplyr)
+library(tidyr)
 ```
 
 ### Load data
@@ -45,16 +46,15 @@ Members of the US military are often encouraged to smoke tobacco.  My third ques
 
 **Research quesion 1:**
 
-What is the general health of veterans vs. non-veterans in red and blue states?
+For respondents reporting on their general health, are there assocations between veteran status or the political leaning of the respondent's state in the reported quality of health?
 
 **Research quesion 2:**
 
-What is the frequency of routine health care for veterans vs. non-veterans in red and blue states?
+Is there an association between veteran status or the political leaning of the respondent's state in the frequency of routine health care?
 
 **Research quesion 3:**
 
-What is the heart-health of veterans vs. non-veterans among those who have smoked tobacco and those who have not?
-
+Are being a veteran and smoking more than 100 cigarettes associated with being diagnosed with a heart attack?
 
 * * *
 
@@ -135,7 +135,7 @@ Now that I've got the data set together, I'll move on to the research questions.
 
 **Research quesion 1:**
 
-What is the general health of veterans vs. non-veterans in red and blue states?
+For respondents reporting on their general health, are there assocations between veteran status or the political leaning of the respondent's state in the reported quality of health?
 
 I'll first select the features of interest for this questions and look at some summary statistics:
 
@@ -154,7 +154,7 @@ head(sum1)
 
 ```
 
-We can see that the spread and variation are similar for all four scenarios.  However, there is some variation in the distributions based on the mean, median and skew.  Non-veterans in blue states are the only group with a right skew, indicating that more of their general health values are less than the mean of 2.5.  It is also interesting to see that the average general health values for veterans are higher than non-veterans in both blue and red states.
+We can see that the spread and variation are similar for all four scenarios.  However, there is variation in the mean, median and skew of the distributions.  Veterans in blue states are the only group with a right skew, indicating that more of their general health values are less than the mean of 2.5.  It is also interesting to see that the average general health values for veterans are higher than non-veterans in both blue and red states.  This indicates an positive association with higher reported health status and being a veteran
 
 The histograms below show how the data is distributed for all four groups:
 
@@ -193,9 +193,10 @@ p2
 
 
 
+
 **Research quesion 2:**
 
-What is the frequency of routine health care for veterans vs. non-veterans in red and blue states?
+Is there an association between veteran status or the political leaning of the respondent's state in the frequency of routine health care?
 
 Again, I'll organize the data required and look at the summary statistics:
 
@@ -211,7 +212,7 @@ head(sum2)
 
 ```
 
-Explanation of summary statistics
+Again, We see that the spread and variation are similar for all four scenarios.  There is some variation in the distributions based on the means and IQR.  All four distributions are right skewed, indicating that there are more respondents indicating more frequent basic medical care than the mean value.  In both red and blue states, there appears to be a positive association between veteran status and the frequency of routine medical care.
 
 These histograms show the distribution for each of the four groups:
 
@@ -249,10 +250,21 @@ p4
 
 **Research quesion 3:**
 
-What is the heart-health of veterans vs. non-veterans among those who have smoked tobacco and those who have not?
+Are being a veteran and smoking more than 100 cigarettes associated with being diagnosed with a heart attack?
+
+Here is a table of the heart attack rates of veteran and non-veteran smokers and non-smokers:
 
 
 ```{r}
+
+sum3<- mydata %>%
+  select(cvdinfr4, veteran3, smoke100) %>%
+  group_by(veteran3, smoke100, cvdinfr4) %>%
+  summarise(Sum=n()) %>%
+  spread(cvdinfr4, Sum) %>%
+  mutate(Sum = Yes+No, `% Yes` = round(Yes/Sum*100, digits =1))
+
+head(sum3)
 
 ```
 
