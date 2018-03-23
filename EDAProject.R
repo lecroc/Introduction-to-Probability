@@ -142,7 +142,9 @@ p2bdat<-p2dat %>%
 p1<-ggplot(p1dat, aes(genhlth, fill=Type))+geom_histogram(binwidth = .5)+
   facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
   geom_vline(xintercept=mean(p1dat$genhlth), color="black")+
-  ggtitle("General Health Value by State Type for non - Veterans")
+  ggtitle("General Health Value by State Type for non - Veterans")+
+  guides(fill=guide_legend(title="State Type"))+
+  ylab("Count of Respondents") + xlab("Reported General Health Value")
 
 p1
 
@@ -151,7 +153,9 @@ p1
 p2<-ggplot(p2dat, aes(genhlth, fill=Type))+geom_histogram(binwidth = .5)+
   facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
   geom_vline(xintercept = mean(p2dat$genhlth), color="black")+
-  ggtitle("General Health Value by State Type for Veterans")
+  ggtitle("General Health Value by State Type for Veterans")+
+  guides(fill=guide_legend(title="State Type"))+
+  ylab("Count of Respondents") + xlab("Reported General Health Value")
 
 p2
 
@@ -218,7 +222,10 @@ p4bdat<-p4dat %>%
 p3<-ggplot(p3dat, aes(checkup1, fill=Type))+geom_histogram(binwidth = .5)+
   facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
   geom_vline(xintercept=mean(p3dat$checkup1), color="black")+
-  ggtitle("Time Since last Checkup by State Type for non - Veterans")
+  ggtitle("Time Since last Checkup by State Type for non - Veterans")+
+  guides(fill=guide_legend(title="State Type"))+
+  ylab("Count of Respondents") + xlab("Reported Frequency of Routine Health Care")
+
 
 p3
 
@@ -227,7 +234,10 @@ p3
 p4<-ggplot(p4dat, aes(checkup1, fill=Type))+geom_histogram(binwidth = .5)+
   facet_grid(.~Type)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
   geom_vline(xintercept = mean(p4dat$checkup1), color="black")+
-  ggtitle("Time Since last Checkup by State Type for Veterans")
+  ggtitle("Time Since last Checkup by State Type for Veterans")+
+  guides(fill=guide_legend(title="State Type"))+
+  ylab("Count of Respondents") + xlab("Reported Frequency of Routine Health Care")
+
 
 p4
 
@@ -249,9 +259,19 @@ t.test(p4adat$checkup1, p4bdat$checkup1, var.equal = T)
 
 sum3<- mydata %>%
   select(cvdinfr4, veteran3, smoke100) %>%
-  group_by(veteran3, smoke100) %>%
-  summarise(n=n()) %>%
-  spread(veteran3, Sum) 
+  group_by(veteran3, smoke100, cvdinfr4) %>%
+  summarise(Sum=n()) %>%
+  spread(cvdinfr4, Sum) %>%
+  mutate(Sum = Yes+No, `PctYes` = round(Yes/Sum*100, digits =1))
 
 head(sum3, 16)
+
+levels(sum3$veteran3)<-c("Veteran", "Non-Veteran")
+p5<-ggplot(sum3, aes(smoke100))+
+  geom_bar(aes(weight=PctYes, fill=veteran3))+
+  facet_grid(.~veteran3)+scale_fill_manual(values=c("#00008b", "#ff0000"))+
+  ylab("% Diagnosed with Heart Attacks")+xlab("Have Smoked at Least 100 Cigarettes")+
+  guides(fill=guide_legend(title=NULL))
+
+p5
 
