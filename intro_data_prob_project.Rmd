@@ -1,10 +1,11 @@
 ---
 title: "Exploring the BRFSS data"
-output: 
-  html_document: 
+output:
+  html_document:
     fig_height: 4
     highlight: pygments
     theme: spacelab
+  word_document: default
 ---
 
 ## Setup
@@ -30,7 +31,7 @@ load("brfss2013.RData")
 
 The data comes from the Behavioral Risk Factor Surveillance System (BRFSS), an observational study conducted in all 50 states in the US and participating US territories.  The population of interest are non-institutionalized adults aged 18+ living in the United States or participating territories.
 
-Data is sampled by surveying randomly selected adults from households contacted via a landline; or, cellular phone users that reside in a private residence or student housing at a college or university.  This study is observational, and therefore no causal relationships can be inferred from this data.  In addition, the sample population is limited a bit to the subset of the stated population that have either a landline or celular phone.
+Data is collected by surveying randomly selected adults from households contacted via a landline; or, cellular phone users that reside in a private residence or student housing at a college or university.  This study is observational, and therefore no causal relationships can be inferred from this data.  In addition, the sample population is limited a bit to the subset of the stated population that have either a landline or celular phone.
 
 There are many potential problems with the data collection.  Certain population segments may be less likely to answer their phone, or may be at home less and therefore unable to be sampled.  In addition, the proportion of samples from each state is not in line with the proportion of the the total US population for each state.  Therefore certain states and / or regions may be over or under sampled within the data.
 
@@ -42,7 +43,7 @@ I'm interested in how the dominant political view within states associates with 
 
 I will first look at how general health between veterans and non-veterans differ by state type.  Second, I will look at how frequency of routine health care varies between veterans and non-veterans by state type.
 
-Members of the US military are often encouraged to smoke tobacco.  My third question will look at the association of respondents who have been diagnosed with a heart attack with smokers and non-smokers among veterans and non-veterans.
+Members of the US military have been encouraged to smoke tobacco.  Cigarettes were part of K anc C ration kits throughout the 2nd world war [http://tobaccocontrol.bmj.com/content/7/3/219].  My third question will look at the association of respondents who have been diagnosed with a heart attack with smokers and non-smokers among veterans and non-veterans.
 
 **Research quesion 1:**
 
@@ -261,7 +262,7 @@ p4
 
 **Research quesion 3:**
 
-Are being a veteran and smoking more than 100 cigarettes associated with being diagnosed with a heart attack?
+Is being a veteran and smoking more than 100 cigarettes associated with being diagnosed with a heart attack?
 
 Here is a table of the heart attack rates of veteran and non-veteran smokers and non-smokers:
 
@@ -279,7 +280,7 @@ head(sum3)
 
 ```
 
-The data show an positive association between being a veteran and being diagnosed with a heart attach for both smokers and non-smokers.  As shown in the chart below, non-smoking veterans report being diagnosed with heart attacks at a higher rate than smokers who are not veterans.
+The data show a positive association between being a veteran and being diagnosed with a heart attach for both smokers and non-smokers.  As shown in the chart below, non-smoking veterans report being diagnosed with heart attacks at a higher rate than smokers who are not veterans.
 
 ```{r}
 levels(sum3$veteran3)<-c("Veteran", "Non-Veteran")
@@ -293,3 +294,12 @@ p5
 
 ```
 
+**Summary**
+
+We find with our first question a positive association between reported general health and being a veteran.  There also is a positive association between living in a red state and better reported general health.
+
+With the second question, we find a positive association between living in a blue state and more frequent routine health care.  We also find a positive association between being a veteran and more frequent routine health care.
+
+The results of the first two questions are intriguing.  Residents of blue states report lower general health;, but more frequent routine health care.  Do they go to the doctor more often because of poor health?  Or, does more frequent care diagnose more issues, which in turn might be associated with lower reported health scores?
+
+The third question shows a positive association with being a veteran and being diagnosed with a heart attack.  Non-smoking veterans actually reported being diagnosed with a heart attack more often than smoking non-veterans.  There is also a clear positive association with being diagnosed with a heart attack and being a smoker.
