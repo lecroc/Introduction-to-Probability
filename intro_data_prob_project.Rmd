@@ -303,3 +303,10 @@ With the second question, we find a positive association between living in a blu
 The results of the first two questions are intriguing.  Residents of blue states report lower general health;, but more frequent routine health care.  Do they go to the doctor more often because of poor health?  Or, does more frequent care diagnose more issues, which in turn might be associated with lower reported health scores?
 
 The third question shows a positive association with being a veteran and being diagnosed with a heart attack.  Non-smoking veterans actually reported being diagnosed with a heart attack more often than smoking non-veterans.  There is also a clear positive association with being diagnosed with a heart attack and being a smoker.
+
+**Code**
+
+All of the code developed for this analysis can be accessed at this link:
+[https://github.com/lecroc/Introduction-to-Probability]
+
+
